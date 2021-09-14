@@ -6,8 +6,26 @@ services:
       - 8080:80
     volumes:
       - ./nginxconf/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginxconf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginxconf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf    
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.2
   au:
     image: otomato/au
     ports: 
       - 3100
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.3
+  syslog:
+    image: kuzishai/syslog-server-udp
+    ports:
+      - 9898
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.4
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
