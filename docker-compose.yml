@@ -11,3 +11,7 @@ services:
     image: otomato/au
     ports: 
       - 3100
+  syslog:
+    image: kuzishai/syslog-server-udp:v0.2
+    ports:
+      - 9898
